@@ -7,12 +7,12 @@
 % and additional functions written by Julien Rouger
 
 clear all; close all
-cd ('C:\AMUBOX\PROGRAMS\STRAIGHTMORPH\TUTORIAL\');
+cd ('C:\AMUBOX\PROGRAMS\STRAIGHTMORPH\TUTORIAL\'); % insert your own path
 
 %% Extracting mObjects -- ExtractMObject.m
 
-mObject=ExtractMObject('6_pleasure.wav') 
-mObject=ExtractMObject('6_anger.wav')
+mObject=ExtractMObject('M48eh.wav') 
+mObject=ExtractMObject('W33eh.wav')
 % by default the mObject is saved as a .mat with the same name as the .wav
 
 % inspecting the mObject
@@ -23,7 +23,7 @@ figure; plot(mObject.F0) % plots the f0 contour
 % resynthesizing the mObject
 sy=executeSTRAIGHTsynthesisM(mObject); % resynthesis of mObject waveform
 sy=.95*sy/max(abs(sy)); % normalise at 95% peak amplitude
-sound(sy,mObject.samplingFrequency); % play the sound 
+sound(sy,mObject.samplingFrequency); % listening to the resynthesized sound 
 
 %% Morphing 2 mObjects 
 
