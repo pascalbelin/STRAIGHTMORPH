@@ -80,7 +80,7 @@ xh2=filter(b,a,x);
 [b,a]=butter(6,3000/fs*2,'high');
 xhh=filter(b,a,x);
 
-tx=[randn(1,framel/2)*rmsp/4000,xh,randn(1,framel)*rmsp/4000];
+tx=[randn(1,round(framel/2))*rmsp/4000,xh,randn(1,framel)*rmsp/4000];
 txs=tx;
 
 %datalength=length(tx);

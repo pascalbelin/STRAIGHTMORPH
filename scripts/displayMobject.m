@@ -36,7 +36,7 @@ switch fieldname
         timeSpan = [0 (ncolumn-1)*tFrame];
         dBsgram = 20*log10(mObject.spectrogram);
         maxSgramdB = max(max(dBsgram));
-        imagesc(timeSpan, [0 fs/6],max(dBsgram,maxSgramdB-70));
+        imagesc(timeSpan, [0 fs/2],max(dBsgram,maxSgramdB-70));
         axis('xy');
         %set(gca,'fontsize',14);
         %xlabel('time (ms)');

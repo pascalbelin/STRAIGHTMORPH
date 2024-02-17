@@ -11,7 +11,7 @@ cd ('C:\AMUBOX\PROGRAMS\STRAIGHTMORPH\TUTORIAL\'); % insert your own path
 
 %% Extracting mObjects -- ExtractMObject.m
 
-mObject=ExtractMObject('M48eh.wav') 
+mObject=ExtractMObject('Bonjour_ET.wav') 
 mObject=ExtractMObject('W33eh.wav')
 % by default the mObject is saved as a .mat with the same name as the .wav
 
