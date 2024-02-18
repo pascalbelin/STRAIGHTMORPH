@@ -1,8 +1,6 @@
 function mObjectM = voicemultimorph(mObjects, mRates)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Not for diffusion - to be used exclusively 
-% as part of a formal collaboration with the 
 % Voice Neurocognition Laboratory
 % University of Glasgow
 % Version 12 June 2011

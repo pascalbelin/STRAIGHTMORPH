@@ -11,7 +11,7 @@ cd ('C:\AMUBOX\PROGRAMS\STRAIGHTMORPH\TUTORIAL\'); % insert your own path
 
 %% Extracting mObjects -- ExtractMObject.m
 
-mObject=ExtractMObject('Bonjour_PB.wav') 
+mObject=ExtractMObject(['Bonjour_YE.wav']) 
 mObject=ExtractMObject('W33eh.wav')
 % by default the mObject is saved as a .mat with the same name as the .wav
 
@@ -29,8 +29,11 @@ sound(sy,mObject.samplingFrequency); % listening to the resynthesized sound
 
 % define mobjects to interpolate 
 mobjs=cell(1,2);
-load 6_pleasure.mat; mobjs{1,1}=mObject;
-load 6_anger.mat; mobjs{1,2}=mObject;
+load Bonjour_ER.mat; mobjs{1,1}=mObject;
+load Bonjour_PB.mat; mobjs{1,2}=mObject;
+
+% load 6_pleasure.mat; mobjs{1,1}=mObject;
+% load 6_anger.mat; mobjs{1,2}=mObject;
 % load M48eh.mat; mobjs{1,1}=mObject;
 % load W33eh.mat; mobjs{1,2}=mObject;
 
@@ -69,7 +72,7 @@ for k=[1.5:-0.25:-0.5]
     mRates.aperiodicity=w; mRates.frequency=w;
     mRates.time=w; % mRates.time=[0.5 0.5] to set all stimuli of the continuum to the same duration
     mObjectM=voicemultimorph(mobjs,mRates);
-    displayMobject(mObjectM, 'anchorFrequency')
+    %displayMobject(mObjectM, 'anchorFrequency')
     sy=executeSTRAIGHTsynthesisM(mObjectM);
     sy=.95*sy/max(abs(sy)); % normalise
     SY=[SY;sy; zeros(mObject.samplingFrequency/5,1)]; % append with 200ms pause
@@ -80,19 +83,28 @@ audiowrite('Continuum_Pleasure-Anger.wav',SY,mObject.samplingFrequency);
 %% morphing N mObjects 
 
 % load 16 mObjects and listen to them
-mobjs=cell(1,16);
-figure; hold on 
-for k=1:16
-    if k>9 S=''; else S='0'; end
-    load (['FemaleVoicesmObj-F',S,num2str(k),'.mat']);
+mobjs=cell(1,7);
+names={'AP','ER','ET','PB','RT','TC','YE'}
+
+
+for k=1:7
+    load (['Bonjour_',names{1,k},'.mat']);
     mobjs{1,k}=mObject;
-    subplot(4,4,k); displayMobject(mObject, 'anchorFrequency')
-    sound(mObject.waveform, mObject.samplingFrequency) 
-    pause(0.5)
+    displayMobject(mObject, 'anchorFrequency') 
 end
 
+% figure; hold on 
+% for k=1:16
+%     if k>9 S=''; else S='0'; end
+%     load (['FemaleVoicesmObj-F',S,num2str(k),'.mat']);
+%     mobjs{1,k}=mObject;
+%     subplot(4,4,k); displayMobject(mObject, 'anchorFrequency')
+%     sound(mObject.waveform, mObject.samplingFrequency) 
+%     pause(0.5)
+% end
+
 % generate N-Average
-we=ones(1,16)/16; % average rate
+we=ones(1,7)/7; % average rate
 mRates.F0=we;
 mRates.spectralamplitude=we;
 mRates.aperiodicity=we;
@@ -105,7 +117,7 @@ mObjectM=voicemultimorph(mobjs,mRates);
 sy=executeSTRAIGHTsynthesisM(mObjectM); 
 sy=.95*sy/max(abs(sy)); % normalise
 sound(sy,mObject.samplingFrequency);
-audiowrite('16FAverage.wav',SY,mObject.samplingFrequency);
+audiowrite('7BonjourAverage.wav',SY,mObject.samplingFrequency);
 figure; displayMobject(mObjectM, 'anchorFrequency')
 figure; plot(mObjectM.F0)
 
