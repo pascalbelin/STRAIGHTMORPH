@@ -11,7 +11,7 @@ cd ('C:\AMUBOX\PROGRAMS\STRAIGHTMORPH\TUTORIAL\'); % insert your own path
 
 %% Extracting mObjects -- ExtractMObject.m
 
-mObject=ExtractMObject('Bonjour_ET.wav') 
+mObject=ExtractMObject('FEM Human 1.1.wav') 
 mObject=ExtractMObject('W33eh.wav')
 % by default the mObject is saved as a .mat with the same name as the .wav
 
@@ -24,23 +24,26 @@ figure; plot(mObject.F0) % plots the f0 contour
 sy=executeSTRAIGHTsynthesisM(mObject); % resynthesis of mObject waveform
 sy=.95*sy/max(abs(sy)); % normalise at 95% peak amplitude
 sound(sy,mObject.samplingFrequency); % listening to the resynthesized sound 
+save FEM_HUM_1.mat mObject
+
 
 %% Morphing 2 mObjects 
 
 % define mobjects to interpolate 
 mobjs=cell(1,2);
-load 6_pleasure.mat; mobjs{1,1}=mObject;
-load 6_anger.mat; mobjs{1,2}=mObject;
+load FEM_ART_1.mat; mobjs{1,1}=mObject;
+load FEM_HUM_1.mat; mobjs{1,2}=mObject;
 % load M48eh.mat; mobjs{1,1}=mObject;
 % load W33eh.mat; mobjs{1,2}=mObject;
 
 % define mRates 
-m=[0.5 0.5]; % weight of 50% for each voice 
-mRates.F0=m; 
-mRates.spectralamplitude=m;
-mRates.aperiodicity=m;
+m=[0 1]; % weight of 50% for each voice 
+a=[1 0]; % artificial voice
+mRates.F0=a; 
+mRates.spectralamplitude=a;
+mRates.aperiodicity=a;
 mRates.time=m;
-mRates.frequency=m;
+mRates.frequency=a;
 
 % execute interpolation
 mObjectM=voicemultimorph(mobjs,mRates);
@@ -60,7 +63,7 @@ figure; plot(mObjectM.F0) %
 
 %% generate continuum
 SY=[];
-for k=[1.5:-0.25:-0.5]
+for k=[1.25:-0.25:-0.25]
     %k= [1:-.1:0]       % 11 step continuum  
     % k=[.95:-.15:.05] %  7 step continuum of Figure 3
     % k=[1.5:-0.1:-0.5] % 19 step continuum including caricatures
